@@ -20,6 +20,7 @@ class LoginState extends State<Login>{
 
   final TextEditingController _userController = new TextEditingController();
   final TextEditingController _passController = new TextEditingController();
+  var welcomeMessage = "Welcome User";
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,9 @@ class LoginState extends State<Login>{
                           child: RaisedButton(
                             color: Colors.green,
                             child: Text ("Login"),
-                            onPressed: () {},
+                            onPressed: () {
+                              showWelcomeMessage();
+                            },
                           ),
                         ),
 //                  Password Button
@@ -82,7 +85,9 @@ class LoginState extends State<Login>{
                           child: RaisedButton(
                             color: Colors.redAccent,
                             child: Text ("Reset"),
-                            onPressed: () {},
+                            onPressed: () {
+                              clearTextBox();
+                            },
                           ),
                         )
                       ],
@@ -97,7 +102,7 @@ class LoginState extends State<Login>{
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Welcome User",
+                  "$welcomeMessage",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
@@ -111,4 +116,26 @@ class LoginState extends State<Login>{
       )
     );
   }
+
+  void clearTextBox() {
+    setState(() {
+      _passController.clear();
+      _userController.clear();
+    });
+  }
+
+  void showWelcomeMessage() {
+    setState(() {
+      if (_userController.text.isEmpty) {
+        welcomeMessage = "Enter Username !!";
+      } else if (_passController.text.isEmpty) {
+        welcomeMessage = "Enter password !!";
+      } else {
+        welcomeMessage = "Welcome ${_userController.text}~";
+      }
+    });
+  }
+
+
 }
+
